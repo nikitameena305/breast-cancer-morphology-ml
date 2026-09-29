@@ -1,0 +1,11 @@
+Feature,Absolute_PC1_loading
+concave_points_mean,0.260383
+concavity_mean,0.257761
+concave_points_worst,0.249367
+compactness_mean,0.241928
+perimeter_worst,0.235494
+radius_worst,0.226607
+concavity_worst,0.226322
+perimeter_mean,0.225804
+area_worst,0.223108
+area_mean,0.219079

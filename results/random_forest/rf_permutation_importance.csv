@@ -1,0 +1,5 @@
+Feature,Mean decrease in test ROC-AUC
+area_worst,0.0063
+concave_points_worst,0.0054
+perimeter_worst,0.0025
+radius_worst,0.0014

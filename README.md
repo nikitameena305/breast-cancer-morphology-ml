@@ -51,11 +51,7 @@ The notebooks do not depend on a Colab-only upload. They look for a local CSV wh
 | Hierarchical | 0.5750 | 0.4569 | 0.3394 |
 | GMM | 0.6779 | 0.5603 | 0.3157 |
 
-Clustering recovered meaningful but incomplete structure related to diagnosis. Cluster labels are not treated as diagnoses.
-
 ### Reduced representations
-
-For Logistic Regression under 5-fold CV:
 
 | Representation | Accuracy mean ± SD | ROC-AUC mean |
 |---|---:|---:|
@@ -63,9 +59,9 @@ For Logistic Regression under 5-fold CV:
 | Worst 10 features | 0.9789 ± 0.0119 | 0.9935 |
 | PCA 7 components | 0.9614 ± 0.0153 | 0.9946 |
 
-Seven principal components retain about 90% of total variance. Repeated feature analyses highlighted concave points, concavity, radius, perimeter, area and compactness, especially among mean and worst measurements.
+Seven principal components retain about **90% of total variance**. Repeated feature analyses highlighted concave points, concavity, radius, perimeter, area and compactness, particularly among mean and worst measurements.
 
-## Repository structure
+## Repository contents
 
 ```text
 breast-cancer-morphology-ml/
@@ -82,13 +78,28 @@ breast-cancer-morphology-ml/
 │   ├── 05_final_comparison.ipynb
 │   └── 06_feature_selection_pca.ipynb
 ├── figures/
-│   ├── supervised_model_comparison.svg
-│   ├── unsupervised_clustering_comparison.svg
-│   ├── cross_validation_accuracy.svg
-│   └── representation_comparison.svg
+│   ├── logistic_regression/
+│   ├── kmeans/
+│   ├── svm/
+│   ├── random_forest/
+│   ├── gmm/
+│   ├── feature_selection/
+│   ├── pca/
+│   └── final comparison SVGs
+├── results/
+│   ├── logistic_regression/
+│   ├── kmeans/
+│   ├── svm/
+│   ├── random_forest/
+│   ├── gmm/
+│   ├── feature_selection/
+│   ├── pca/
+│   └── final/
 └── .github/workflows/
     └── verify.yml
 ```
+
+See **`figures/README.md`** and **`results/README.md`** for the full artifact inventory.
 
 ## Reproduce from the repository
 
@@ -117,27 +128,17 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Run the notebooks in numerical order from **01** to **06**, or use the automated GitHub Actions workflow. The workflow installs dependencies in a fresh Python environment and executes every notebook from the repository, so the project is checked independently of the original Colab session.
+Run the notebooks in order from **01** to **06**. GitHub Actions also installs the dependencies in a fresh environment and executes the notebooks from the repository to catch Colab-only assumptions.
 
 ## Reproducibility design
 
 - fixed random seeds where applicable;
 - stratified train/test and cross-validation splits;
 - scaling and PCA fitted on training data or inside CV pipelines;
-- transformations re-fit independently within each fold to avoid leakage;
+- transformations re-fit independently within each CV fold to avoid leakage;
 - supervised and unsupervised metrics interpreted separately.
 
-## Figures
-
-![Supervised comparison](figures/supervised_model_comparison.svg)
-
-![Unsupervised comparison](figures/unsupervised_clustering_comparison.svg)
-
-![Cross-validation accuracy](figures/cross_validation_accuracy.svg)
-
-![Representation comparison](figures/representation_comparison.svg)
-
-## Limitation
+## Limitations
 
 This is an academic machine-learning analysis, not a clinical diagnostic system. The dataset is relatively small and the reported cross-validation is internal validation only. No independent external clinical cohort was used.
 

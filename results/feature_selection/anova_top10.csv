@@ -1,0 +1,11 @@
+Feature,F_score,p_value
+concave_points_worst,964.385393,1.969100e-124
+perimeter_worst,897.944219,5.771397e-119
+concave_points_mean,861.676020,7.101150e-116
+radius_worst,860.781707,8.482292e-116
+perimeter_mean,697.235272,8.436251e-101
+area_worst,661.600206,2.828848e-97
+radius_mean,646.981021,8.465941e-96
+area_mean,573.060747,4.734564e-88
+concavity_mean,533.793126,9.966556e-84
+concavity_worst,436.691939,2.464664e-72

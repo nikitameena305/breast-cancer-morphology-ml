@@ -1,0 +1,4 @@
+Representation,Accuracy_mean,Accuracy_SD,ROC_AUC_mean,ROC_AUC_SD
+All 30,0.9737,0.0166,0.9953,0.0053
+Worst 10,0.9789,0.0119,0.9935,0.0081
+PCA 7,0.9614,0.0153,0.9946,0.0045

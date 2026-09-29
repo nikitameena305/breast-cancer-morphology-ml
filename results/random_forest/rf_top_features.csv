@@ -1,0 +1,11 @@
+Rank,Feature,MDI
+1,perimeter_worst,0.1359
+2,area_worst,0.1307
+3,concave_points_worst,0.1129
+4,concave_points_mean,0.1002
+5,radius_worst,0.0847
+6,radius_mean,0.0522
+7,perimeter_mean,0.0514
+8,concavity_mean,0.0507
+9,concavity_worst,0.039
+10,area_mean,0.0381

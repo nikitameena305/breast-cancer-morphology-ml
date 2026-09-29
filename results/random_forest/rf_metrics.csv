@@ -1,0 +1,8 @@
+Metric,Value
+Accuracy,0.9737
+Precision,1
+Sensitivity,0.9286
+Specificity,1
+F1,0.963
+ROC-AUC,0.9967
+CV ROC-AUC,0.989

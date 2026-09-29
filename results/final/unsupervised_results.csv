@@ -1,0 +1,4 @@
+Method,ARI,NMI,Silhouette
+K-Means,0.6707,0.5546,0.3450
+Hierarchical,0.5750,0.4569,0.3394
+GMM,0.6779,0.5603,0.3157

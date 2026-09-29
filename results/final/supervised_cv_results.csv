@@ -1,0 +1,4 @@
+Model,Accuracy_mean,Accuracy_SD,ROC_AUC_mean,ROC_AUC_SD
+Logistic Regression,0.9737,0.0166,0.9953,0.0053
+SVM,0.9772,0.0163,0.9945,0.0060
+Random Forest,0.9526,0.0131,0.9895,0.0077
