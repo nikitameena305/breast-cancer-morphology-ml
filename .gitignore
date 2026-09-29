@@ -1,0 +1,10 @@
+.venv/
+venv/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+.DS_Store
+Thumbs.db
+train.csv
+test.csv
+results/
