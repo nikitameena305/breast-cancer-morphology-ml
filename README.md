@@ -1,40 +1,73 @@
 # Breast Cancer Morphology ML
 
-Supervised and unsupervised machine-learning analysis of breast-tumour morphology using the Wisconsin Diagnostic Breast Cancer dataset.
+[![Verify notebooks](https://github.com/nikitameena305/breast-cancer-morphology-ml/actions/workflows/verify.yml/badge.svg)](https://github.com/nikitameena305/breast-cancer-morphology-ml/actions/workflows/verify.yml)
+
+Reproducible supervised and unsupervised machine-learning analysis of breast-tumour morphology using the Wisconsin Diagnostic Breast Cancer dataset.
 
 ## Research question
 
 **To what extent do supervised and unsupervised learning methods reveal consistent diagnostic structure in breast-tumour morphology, and can this structure be represented using a smaller subset of morphological features?**
 
-## Project overview
+## Dataset
 
-The project compares complementary views of the same morphology data:
+- 569 observations
+- 30 numerical morphology features
+- 357 benign and 212 malignant samples
+- mean, standard-error and worst-measurement feature families
 
-- **Supervised learning:** Logistic Regression, SVM, Random Forest
-- **Unsupervised learning:** K-Means, Hierarchical Clustering, Gaussian Mixture Model
+The notebooks do not depend on a Colab-only upload. They look for a local CSV when available and otherwise reconstruct the equivalent dataset from `sklearn.datasets.load_breast_cancer`.
+
+## Methods
+
+- **Supervised:** Logistic Regression, SVM, Random Forest
+- **Unsupervised:** K-Means, Hierarchical Clustering, Gaussian Mixture Model (GMM)
 - **Feature analysis:** ANOVA F-scores and feature importance
 - **Dimensionality reduction:** PCA
 - **Robustness:** 5-fold stratified cross-validation
 
-The dataset contains **569 observations** and **30 morphology features**.
-
 ## Main findings
 
-- Supervised models showed consistently high discrimination.
-- 5-fold CV results:
-  - Logistic Regression: accuracy 0.9737 ± 0.0166, ROC-AUC 0.9953 ± 0.0053
-  - SVM: accuracy 0.9772 ± 0.0163, ROC-AUC 0.9945 ± 0.0060
-  - Random Forest: accuracy 0.9526 ± 0.0131, ROC-AUC 0.9895 ± 0.0077
-- Clustering recovered meaningful but incomplete structure related to diagnosis.
-- Morphology features repeatedly highlighted included concave points, concavity, radius, perimeter and area.
-- The 10 worst-measurement features retained performance comparable to all 30 features.
-- Seven principal components retained about 90% of total variance while preserving most predictive information.
+### Supervised test-set results
 
-These results are **internal validation on this dataset**, not evidence of clinical diagnostic performance.
+| Model | Accuracy | Sensitivity | Specificity | F1 | ROC-AUC |
+|---|---:|---:|---:|---:|---:|
+| Logistic Regression | 0.9649 | 0.9286 | 0.9861 | 0.9512 | 0.9960 |
+| SVM | 0.9737 | 0.9286 | 1.0000 | 0.9630 | 0.9957 |
+| Random Forest | 0.9737 | 0.9286 | 1.0000 | 0.9630 | 0.9967 |
+
+### 5-fold cross-validation
+
+| Model | Accuracy mean ± SD | ROC-AUC mean ± SD |
+|---|---:|---:|
+| Logistic Regression | 0.9737 ± 0.0166 | 0.9953 ± 0.0053 |
+| SVM | 0.9772 ± 0.0163 | 0.9945 ± 0.0060 |
+| Random Forest | 0.9526 ± 0.0131 | 0.9895 ± 0.0077 |
+
+### Unsupervised clustering
+
+| Method | ARI | NMI | Silhouette |
+|---|---:|---:|---:|
+| K-Means | 0.6707 | 0.5546 | 0.3450 |
+| Hierarchical | 0.5750 | 0.4569 | 0.3394 |
+| GMM | 0.6779 | 0.5603 | 0.3157 |
+
+Clustering recovered meaningful but incomplete structure related to diagnosis. Cluster labels are not treated as diagnoses.
+
+### Reduced representations
+
+For Logistic Regression under 5-fold CV:
+
+| Representation | Accuracy mean ± SD | ROC-AUC mean |
+|---|---:|---:|
+| All 30 features | 0.9737 ± 0.0166 | 0.9953 |
+| Worst 10 features | 0.9789 ± 0.0119 | 0.9935 |
+| PCA 7 components | 0.9614 ± 0.0153 | 0.9946 |
+
+Seven principal components retain about 90% of total variance. Repeated feature analyses highlighted concave points, concavity, radius, perimeter, area and compactness, especially among mean and worst measurements.
 
 ## Repository structure
 
-```
+```text
 breast-cancer-morphology-ml/
 ├── README.md
 ├── requirements.txt
@@ -49,77 +82,66 @@ breast-cancer-morphology-ml/
 │   ├── 05_final_comparison.ipynb
 │   └── 06_feature_selection_pca.ipynb
 ├── figures/
-│   └── README.md
-└── .github/
-    └── workflows/
-        └── verify.yml
+│   ├── supervised_model_comparison.svg
+│   ├── unsupervised_clustering_comparison.svg
+│   ├── cross_validation_accuracy.svg
+│   └── representation_comparison.svg
+└── .github/workflows/
+    └── verify.yml
 ```
 
-## Reproduce the analysis
-
-### 1. Clone the repository
+## Reproduce from the repository
 
 ```bash
 git clone https://github.com/nikitameena305/breast-cancer-morphology-ml.git
 cd breast-cancer-morphology-ml
+python -m venv .venv
 ```
 
-### 2. Create an environment
+Activate the environment:
 
+**macOS/Linux**
 ```bash
-python -m venv .venv
 source .venv/bin/activate
 ```
 
-On Windows:
-
+**Windows**
 ```powershell
 .venv\Scripts\activate
 ```
 
-### 3. Install dependencies
+Install dependencies:
 
 ```bash
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 4. Run the notebooks
-
-Start Jupyter:
-
-```bash
-jupyter lab
-```
-
-Run the notebooks in numerical order from **01** to **06**.
-
-The notebooks first look for `data/breast_cancer.csv` (or `../data/breast_cancer.csv` when launched from the notebooks directory). If the CSV is absent, they rebuild the equivalent Wisconsin Diagnostic Breast Cancer data from `sklearn.datasets.load_breast_cancer`, so the repository remains reproducible without a Colab-only upload.
+Run the notebooks in numerical order from **01** to **06**, or use the automated GitHub Actions workflow. The workflow installs dependencies in a fresh Python environment and executes every notebook from the repository, so the project is checked independently of the original Colab session.
 
 ## Reproducibility design
 
-- Fixed random seeds are used where relevant.
-- Train/test separation is preserved.
-- Standardization and PCA are fitted on training data or placed inside cross-validation pipelines.
-- 5-fold stratified CV is used for model robustness checks.
-- Supervised and unsupervised metrics are reported separately because they answer different questions.
-- GitHub Actions executes the notebooks from a clean environment to detect broken repository-only assumptions.
+- fixed random seeds where applicable;
+- stratified train/test and cross-validation splits;
+- scaling and PCA fitted on training data or inside CV pipelines;
+- transformations re-fit independently within each fold to avoid leakage;
+- supervised and unsupervised metrics interpreted separately.
 
-## Notebook guide
+## Figures
 
-| Notebook | Purpose |
-|---|---|
-| 01 | Data loading, cleaning and train/test preparation |
-| 02 | Logistic Regression and K-Means |
-| 03 | SVM and Hierarchical Clustering |
-| 04 | Random Forest and GMM |
-| 05 | Final supervised/unsupervised comparison and cross-validation |
-| 06 | Feature selection, Mean/SE/Worst comparison and PCA |
+![Supervised comparison](figures/supervised_model_comparison.svg)
 
-## Limitations
+![Unsupervised comparison](figures/unsupervised_clustering_comparison.svg)
 
-The dataset is relatively small (569 observations), features are correlated, and there is no independent external clinical validation. Cross-validation here is internal validation only.
+![Cross-validation accuracy](figures/cross_validation_accuracy.svg)
+
+![Representation comparison](figures/representation_comparison.svg)
+
+## Limitation
+
+This is an academic machine-learning analysis, not a clinical diagnostic system. The dataset is relatively small and the reported cross-validation is internal validation only. No independent external clinical cohort was used.
 
 ## Author
 
-Nikita Meena
+**Nikita Meena**  
+M2 Artificial Intelligence and Data Analysis, Sorbonne University
