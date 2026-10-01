@@ -6,12 +6,11 @@ Reproducible supervised and unsupervised machine-learning analysis of breast-tum
 
 ## Research question
 
-**1.Can machine learning algorithms accurately predict whether a tumor is benign or malignant based on cellular morphology?
+1.Can machine learning algorithms accurately predict whether a tumor is benign or malignant based on cellular morphology?
 
 2. Do the morphological features naturally separate the samples into distinct subpopulations that align with the clinical diagnostic classes
 
 3. What are the key features driving the separation between benign and malignant samples?
- **
 
 ## Dataset
 
